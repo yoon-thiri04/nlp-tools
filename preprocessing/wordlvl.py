@@ -7,7 +7,6 @@ text = "ကျွန်တော်ကသုတေသနသမားပါ။ �
 
 wordtok = WordTokenizer()
 tokenize= wordtok.tokenize(text)
-
 line=" ".join(tokenize)
 with open("D:/python_hand_face_testing/nlp/preprocessing/word_output.txt","w",encoding="utf-8") as f:
     f.write(line)
