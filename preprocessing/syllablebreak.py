@@ -10,9 +10,10 @@ import re
 
 myConsonant = r"က-အ" # basic burmese char
 enChar = r"a-zA-Z0-9"
-otherChar = r"ဣဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-/:-@[-`{-~\s"
+otherChar = r"ဣ၎ဤဥဦဧဩဪဿ၌၍၏၀-၉၊။!-\/:-\@\[-`{-~\\s"
 ssSymbol = r'္' # subscript symbols - က္က, တ္တ
 aThat = r'်' # athat - က်,ပ်
+
 
 # a consonant not after a subscript symbol AND a consonant is not followed by a-That character or a subscript symbol
 # ?<! means -> NOT glued to the previous character - The character just before this consonant is NOT ္
@@ -24,14 +25,20 @@ aThat = r'်' # athat - က်,ပ်
 BreakPattern = re.compile(r"((?<!" + ssSymbol + r")["+ myConsonant + r"](?![" + aThat + ssSymbol + r"])" 
                           + r"|[" + enChar + otherChar + r"])", re.UNICODE)
 
+
+
+
 # Read the text 
-with open("nlp/preprocessing/input.txt","r",encoding="utf-8") as f:
+with open("D:/Sem8/my_ai_study/nlp/preprocessing/zawgyi.txt","r",encoding="utf-8") as f:
     text = f.read()
 
-# Break syllable and insert | between
-broke_text = BreakPattern.sub(r" \1",text)
 
+broke_text = BreakPattern.sub(r"+\1", text)
+
+
+broke_text = re.sub(r'(?m)^\+', '', broke_text)
+broke_text = re.sub(r'(?m)\+$', '', broke_text)
 # Remove leading |
 # Write in output file
-with open("nlp/preprocessing/output.txt","w", encoding="utf-8") as f:
+with open("nlp/preprocessing/unicode_output.txt","w", encoding="utf-8") as f:
     f.write(broke_text)
